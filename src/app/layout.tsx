@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "./globals.scss";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "TSS App",
@@ -14,7 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body id="main">
+        <Header />
+
+        <div id="content" className="">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

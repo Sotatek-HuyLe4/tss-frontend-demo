@@ -1,2 +1,23 @@
 @import "tailwindcss";
 @import "normalize.css";
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+#main {
+  min-height: 100vh;
+  width: 100%;
+  padding: 0 200px;
+
+  background-image: url("../../public/images/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+}
