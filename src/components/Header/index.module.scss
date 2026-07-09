@@ -1,2 +1,90 @@
+@reference "tailwindcss";
+
 .header {
+  @apply w-full h-[92px] px-[240px] py-4
+    flex items-center justify-between 
+    text-[#f5fffd] border-b border-b-[rgba(104,255,214,0.22)] backdrop-blur-[2px];
+
+  background: linear-gradient(
+    180deg,
+    rgba(5, 42, 34, 0.9) 0%,
+    rgba(4, 34, 29, 0.72) 100%
+  );
+}
+
+.brandSection {
+  @apply flex items-center gap-4;
+}
+
+.logo {
+  @apply w-15 h-15 object-contain rounded-full;
+
+  box-shadow: 0 0 16px rgba(98, 255, 215, 0.45);
+}
+
+.brandText {
+  @apply flex flex-col gap-2;
+}
+
+.title {
+  @apply m-0 font-bold text-[#eafff9];
+
+  font-size: clamp(24px, 1.85vw, 30px);
+  line-height: 0.98;
+  letter-spacing: 0.15px;
+}
+
+.description {
+  @apply m-0 font-normal text-[rgba(206,245,234,0.9)];
+
+  font-size: clamp(13px, 0.95vw, 14px);
+  line-height: 1.18;
+  letter-spacing: 0.1px;
+}
+
+.statusBadge {
+  @apply inline-flex items-center gap-[9px] px-[15px] py-2 
+    rounded-full border border-[rgba(111,255,218,0.33)] bg-[rgba(8,63,50,0.6)];
+
+  box-shadow: inset 0 0 16px rgba(98, 255, 215, 0.1);
+}
+
+.statusDot {
+  @apply w-[10px] h-[10px] rounded-full bg-[#3cffc7];
+
+  box-shadow: 0 0 10px rgba(60, 255, 199, 0.8);
+}
+
+.statusText {
+  @apply text-xs font-semibold text-[rgba(224,255,246,0.95)];
+  line-height: 1;
+  letter-spacing: 1.45px;
+}
+
+@media (max-width: 1024px) {
+  .header {
+    @apply h-auto min-h-[74px] px-4 py-3;
+  }
+
+  .title {
+    @apply text-[28px];
+  }
+  .description {
+    @apply text-[15px];
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    @apply gap-[10px];
+  }
+
+  .statusBadge {
+    @apply px-3 py-1.5;
+  }
+
+  .statusText {
+    @apply text-xs;
+    letter-spacing: 1.2px;
+  }
 }
