@@ -1,0 +1,13 @@
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M24 4L40 13V35L24 44L8 35V13L24 4Z"
+    stroke="#5eead4"
+    stroke-width="2"
+  />
+  <path
+    d="M24 16V32M16 24H32"
+    stroke="#5eead4"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+</svg>

@@ -1,0 +1,159 @@
+@reference "tailwindcss";
+
+.card {
+  @apply relative w-full min-h-[calc(100vh-18rem)] overflow-hidden 
+    rounded-[28px] border border-[rgba(94,234,212,0.14)] px-8 py-12;
+
+  background: linear-gradient(
+    180deg,
+    rgba(6, 39, 35, 0.96) 0%,
+    rgba(5, 14, 13, 0.98) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(94, 234, 212, 0.28),
+    0 12px 40px rgba(0, 0, 0, 0.45);
+
+  &::before {
+    content: "";
+    @apply pointer-events-none absolute inset-0 opacity-[0.22];
+
+    background-image: radial-gradient(
+      rgba(94, 234, 212, 0.18) 0.8px,
+      transparent 0.8px
+    );
+    background-size: 14px 14px;
+  }
+}
+
+.cardGlow {
+  @apply pointer-events-none absolute top-0 left-1/2 h-px w-[72%] -translate-x-1/2;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(94, 234, 212, 0.85) 50%,
+    transparent 100%
+  );
+  box-shadow: 0 0 18px rgba(94, 234, 212, 0.45);
+}
+
+.header {
+  @apply relative flex flex-col gap-3;
+}
+
+.iconWrapper {
+  @apply mb-1 flex h-11 w-11 items-center justify-center;
+}
+
+.headerIcon {
+  @apply h-10 w-10 text-[#5eead4];
+
+  filter: drop-shadow(0 0 10px rgba(94, 234, 212, 0.65));
+}
+
+.title {
+  @apply m-0 text-[26px] font-bold leading-tight text-white;
+}
+
+.description {
+  @apply m-0 max-w-[34ch] text-[15px] leading-[1.55] text-[rgba(167,243,232,0.62)];
+}
+
+.divider {
+  @apply relative my-12 h-px w-full bg-[rgba(94,234,212,0.1)];
+}
+
+.form {
+  @apply relative flex flex-1 flex-col gap-2;
+}
+
+.formItem {
+  @apply mb-1;
+
+  :global(.ant-form-item-label) {
+    @apply pb-2;
+
+    > label {
+      @apply h-auto;
+    }
+  }
+
+  :global(.ant-form-item-explain-error) {
+    @apply mt-1 text-xs text-red-400;
+  }
+
+  :global(.ant-input-outlined) {
+    background: none;
+    border-color: rgba(127, 236, 219, 0.85);
+
+    &:hover,
+    &:focus-within {
+      border-color: rgba(127, 236, 219, 0.85);
+    }
+  }
+
+  :global(.ant-input-outlined.ant-input-status-error:not(.ant-input-disabled)) {
+    background: none;
+  }
+}
+
+.fieldLabel {
+  @apply text-[11px] font-semibold tracking-[0.16em] text-[rgba(94,234,212,0.68)];
+}
+
+.input {
+  @apply h-12 mt-3 rounded-xl border border-[rgba(45,212,191,0.28)] bg-[rgba(0,0,0,0.42)] px-3 text-sm;
+
+  &:hover,
+  &:focus-within,
+  &:global(.ant-input-affix-wrapper-focused) {
+    @apply border-[rgba(94,234,212,0.45)] shadow-none;
+    background: rgba(0, 0, 0, 0.52) !important;
+  }
+
+  :global(.ant-input-prefix) {
+    @apply mr-2 text-[rgba(94,234,212,0.5)];
+  }
+}
+
+.inputField {
+  color: #eafff9 !important;
+  caret-color: #5eead4;
+  background: transparent !important;
+  -webkit-text-fill-color: #eafff9;
+
+  &::placeholder {
+    color: rgba(94, 234, 212, 0.38) !important;
+    -webkit-text-fill-color: rgba(94, 234, 212, 0.38);
+  }
+}
+
+.inputIcon {
+  @apply h-4 w-4;
+}
+
+.helperText {
+  @apply mb-6 mt-1 text-xs leading-relaxed text-[rgba(167,243,232,0.42)];
+}
+
+.submitItem:global(.ant-form-item) {
+  @apply mb-4;
+}
+
+.submitButton {
+  @apply w-full rounded-2xl py-4 text-[#071412];
+
+  background: #5eead4 !important;
+  box-shadow: 0 0 22px rgba(94, 234, 212, 0.22);
+
+  &:hover,
+  &:focus {
+    background: #6ef0dc !important;
+    color: #071412 !important;
+    border-color: #6ef0dc !important;
+  }
+}
+
+.submitButton:global(.ant-btn) {
+  @apply h-12 text-[15px] font-semibold border-0;
+}
