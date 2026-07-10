@@ -17,3 +17,12 @@ body {
   @apply min-h-screen w-full
     flex flex-col;
 }
+
+#content {
+  @apply w-full h-full px-60 py-20;
+}
+
+#home {
+  @apply w-full h-full
+    grid grid-cols-3 gap-15;
+}

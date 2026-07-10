@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
 .header {
-  @apply w-full h-[92px] px-[240px] py-4
+  @apply w-full h-[92px] px-60 py-4
     flex items-center justify-between 
     text-[#f5fffd] border-b border-b-[rgba(104,255,214,0.22)] backdrop-blur-[2px];
 
