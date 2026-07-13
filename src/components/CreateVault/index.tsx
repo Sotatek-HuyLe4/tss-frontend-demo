@@ -12,7 +12,7 @@ type FieldType = {
 const CreateVault = () => {
   const [form] = Form.useForm<FieldType>();
 
-  const onFinish = (values: FieldType) => {
+  const onFinish = async (values: FieldType) => {
     console.log(values);
 
     form.resetFields();
