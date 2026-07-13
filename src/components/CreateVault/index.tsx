@@ -10,8 +10,12 @@ type FieldType = {
 };
 
 const CreateVault = () => {
+  const [form] = Form.useForm<FieldType>();
+
   const onFinish = (values: FieldType) => {
     console.log(values);
+
+    form.resetFields();
   };
 
   return (
@@ -42,6 +46,7 @@ const CreateVault = () => {
       <Form<FieldType>
         name="createVault"
         layout="vertical"
+        form={form}
         onFinish={onFinish}
         autoComplete="off"
         className={styles.form}
@@ -50,7 +55,10 @@ const CreateVault = () => {
         <Form.Item
           label={<span className={styles.fieldLabel}>VAULT NAME</span>}
           name="vaultName"
-          rules={[{ required: true, message: "Please enter a vault name" }]}
+          rules={[
+            { required: true, message: "Please enter a vault name" },
+            { max: 20, message: "Vault name must be less than 20 characters" },
+          ]}
           className={styles.formItem}
         >
           <Input
