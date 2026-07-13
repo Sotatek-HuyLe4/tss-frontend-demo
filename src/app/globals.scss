@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @import "normalize.css";
 
+:root {
+  --toastify-color-success: #2ed9a3 !important;
+  --toastify-color-error: #ff5c7a !important;
+
+  --toastify-icon-color-success: var(--toastify-color-success) !important;
+  --toastify-icon-color-error: var(--toastify-color-error) !important;
+}
+
 html,
 body {
   width: 100%;

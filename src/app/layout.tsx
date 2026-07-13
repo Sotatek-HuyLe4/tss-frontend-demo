@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { Bounce, ToastContainer } from "react-toastify";
 
 import "./globals.scss";
 import Header from "@/components/Header";
@@ -21,6 +22,19 @@ export default function RootLayout({
           <Header />
 
           <div id="content">{children}</div>
+
+          <ToastContainer
+            position="top-right"
+            autoClose={5_000}
+            hideProgressBar={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Bounce}
+          />
         </body>
       </AntdRegistry>
     </html>

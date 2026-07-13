@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button, Form, Input, Modal } from "antd";
+import { toast } from "react-toastify";
 
 import styles from "./index.module.scss";
 import { createChannel, generateKeyShare, initVault } from "@/apis/tss";
@@ -62,7 +63,10 @@ const CreateVault = () => {
     await new Promise<void>((resolve) => {
       const finishTimer = setInterval(() => {
         const current = progressRef.current;
-        const next = Math.min(100, current + Math.max(1.2, (100 - current) * 0.18));
+        const next = Math.min(
+          100,
+          current + Math.max(1.2, (100 - current) * 0.18),
+        );
 
         progressRef.current = next;
         setProgress(Number(next.toFixed(2)));
@@ -95,12 +99,15 @@ const CreateVault = () => {
       await finishProgress();
     } catch (error) {
       console.error(error);
+
       clearProgressTimer();
+      toast.error("Failed to create vault");
     } finally {
       form.resetFields();
       setProgress(0);
       progressRef.current = 0;
       setLoading(false);
+      toast.success("Vault created successfully");
     }
   };
 
