@@ -1,21 +1,40 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Button, Form, Input } from "antd";
 
 import styles from "./index.module.scss";
+import { createChannel, generateKeyShare, initVault } from "@/apis/tss";
 
 type FieldType = {
-  vaultName?: string;
+  vaultName: string;
 };
 
 const CreateVault = () => {
   const [form] = Form.useForm<FieldType>();
+  const [loading, setLoading] = useState(false);
 
-  const onFinish = async (values: FieldType) => {
-    console.log(values);
+  const onFinish = async (value: FieldType) => {
+    setLoading(true);
+    const { vaultName } = value;
+    const vault = vaultName.toLowerCase().trim();
+
+    try {
+      // init vault
+      await initVault({ vault });
+
+      // create channel
+      const { channelId } = await createChannel();
+
+      // generate key share
+      await generateKeyShare({ vault, channelId });
+    } catch (error) {
+      console.error(error);
+    }
 
     form.resetFields();
+    setLoading(false);
   };
 
   return (
@@ -75,6 +94,7 @@ const CreateVault = () => {
             placeholder="e.g. Alice..."
             className={styles.input}
             classNames={{ input: styles.inputField }}
+            disabled={loading}
           />
         </Form.Item>
 
@@ -83,7 +103,11 @@ const CreateVault = () => {
         </p>
 
         <Form.Item className={styles.submitItem}>
-          <Button htmlType="submit" className={styles.submitButton}>
+          <Button
+            htmlType="submit"
+            className={styles.submitButton}
+            loading={loading}
+          >
             Create Vault →
           </Button>
         </Form.Item>
