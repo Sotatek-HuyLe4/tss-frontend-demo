@@ -30,8 +30,26 @@
   @apply m-0 truncate text-[16px] font-semibold text-white;
 }
 
+.addressRow {
+  @apply flex min-w-0 cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-left transition-colors;
+
+  color: rgba(94, 234, 212, 0.65);
+
+  &:hover {
+    color: rgba(94, 234, 212, 0.9);
+  }
+}
+
+.copyIcon {
+  @apply h-5 w-5 shrink-0 transition-[filter];
+}
+
+.addressRow:hover .copyIcon {
+  filter: brightness(1.35);
+}
+
 .address {
-  @apply m-0 font-mono text-[13px] tracking-wide text-[rgba(167,243,232,0.55)];
+  @apply truncate font-mono text-[13px] tracking-wide;
 }
 
 .right {
