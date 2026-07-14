@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { Button } from "antd";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 import styles from "./index.module.scss";
+import { faucet } from "@/apis/faucet";
 
 export interface IVaultItem {
   id: string;
@@ -22,6 +24,8 @@ const truncateAddress = (address: string) => {
 };
 
 const VaultItem = ({ name, address, balance }: IVaultItem) => {
+  const [isFaucetLoading, setIsFaucetLoading] = useState(false);
+
   const handleCopyAddress = async () => {
     try {
       await navigator.clipboard.writeText(address);
@@ -29,6 +33,24 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
     } catch {
       toast.error("Failed to copy address");
     }
+  };
+
+  const handleFaucet = async () => {
+    setIsFaucetLoading(true);
+
+    try {
+      // try to faucet the address
+      await faucet({ address });
+      await new Promise((resolve) => setTimeout(resolve, 3_000));
+
+      toast.success("Faucet successful");
+    } catch (error) {
+      console.error(error);
+
+      toast.error("Failed to faucet");
+    }
+
+    setIsFaucetLoading(false);
   };
 
   return (
@@ -66,7 +88,14 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
       <div className={styles.right}>
         <p className={styles.balance}>{balance} ETH</p>
         <div className={styles.actions}>
-          <Button className={styles.faucetBtn}>Faucet</Button>
+          <Button
+            className={styles.faucetBtn}
+            onClick={handleFaucet}
+            loading={isFaucetLoading}
+            disabled={isFaucetLoading}
+          >
+            Faucet
+          </Button>
           <Button className={styles.sendBtn}>Send ETH</Button>
         </div>
       </div>

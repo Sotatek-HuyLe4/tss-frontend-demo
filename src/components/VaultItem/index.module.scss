@@ -64,7 +64,8 @@
   @apply flex items-center gap-3;
 }
 
-.faucetBtn:global(.ant-btn) {
+.faucetBtn:global(.ant-btn),
+.faucetBtn:global(.ant-btn.ant-btn-color-default.ant-btn-variant-outlined) {
   @apply h-auto rounded-xl border border-[rgba(94,234,212,0.45)] bg-transparent
     px-4 py-2 text-sm font-medium text-white shadow-none;
 
@@ -74,6 +75,14 @@
 
     border-color: rgba(94, 234, 212, 0.7) !important;
     background: rgba(94, 234, 212, 0.08) !important;
+    color: #ffffff !important;
+  }
+
+  &:disabled {
+    @apply border-[rgba(94,234,212,0.45)] bg-transparent text-white opacity-50;
+
+    border-color: rgba(94, 234, 212, 0.45) !important;
+    background: transparent !important;
     color: #ffffff !important;
   }
 }
