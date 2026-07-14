@@ -14,7 +14,13 @@ type Vault = {
 };
 
 const ListVault = async () => {
-  const { users: vaults } = await getUsers();
+  let vaults: Vault[] = [];
+  try {
+    const { users } = await getUsers();
+    vaults = users;
+  } catch (error) {
+    console.error(error);
+  }
 
   return (
     <section className={styles.card}>
