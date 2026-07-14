@@ -1,0 +1,77 @@
+@reference "tailwindcss";
+
+.item {
+  @apply relative flex shrink-0 items-center justify-between gap-4 rounded-2xl 
+    border border-[rgba(94,234,212,0.14)] px-5 py-4;
+
+  background: linear-gradient(
+    180deg,
+    rgba(11, 42, 36, 0.92) 0%,
+    rgba(13, 45, 39, 0.95) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(94, 234, 212, 0.08);
+}
+
+.left {
+  @apply flex min-w-0 items-center gap-4;
+}
+
+.icon {
+  @apply h-10 w-10 shrink-0;
+
+  filter: drop-shadow(0 0 10px rgba(94, 234, 212, 0.4));
+}
+
+.meta {
+  @apply flex min-w-0 flex-col gap-1;
+}
+
+.name {
+  @apply m-0 truncate text-[16px] font-semibold text-white;
+}
+
+.address {
+  @apply m-0 font-mono text-[13px] tracking-wide text-[rgba(167,243,232,0.55)];
+}
+
+.right {
+  @apply flex shrink-0 items-center gap-5;
+}
+
+.balance {
+  @apply m-0 text-[16px] font-semibold text-white;
+}
+
+.actions {
+  @apply flex items-center gap-3;
+}
+
+.faucetBtn:global(.ant-btn) {
+  @apply h-auto rounded-xl border border-[rgba(94,234,212,0.45)] bg-transparent
+    px-4 py-2 text-sm font-medium text-white shadow-none;
+
+  &:hover,
+  &:focus {
+    @apply border-[rgba(94,234,212,0.7)] bg-[rgba(94,234,212,0.08)] text-white;
+
+    border-color: rgba(94, 234, 212, 0.7) !important;
+    background: rgba(94, 234, 212, 0.08) !important;
+    color: #ffffff !important;
+  }
+}
+
+.sendBtn:global(.ant-btn) {
+  @apply h-auto rounded-xl border-0 bg-[#5eead4] px-4 py-2 text-sm font-semibold text-[#071412]
+    shadow-[0_0_12px_rgba(94,234,212,0.22)];
+
+  border: none !important;
+
+  &:hover,
+  &:focus {
+    @apply border-transparent bg-[#6ef0dc] text-[#071412];
+
+    background: #6ef0dc !important;
+    color: #071412 !important;
+    border-color: transparent !important;
+  }
+}

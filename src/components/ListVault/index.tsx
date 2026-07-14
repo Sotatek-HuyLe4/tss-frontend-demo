@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 import styles from "./index.module.scss";
+import VaultItem from "../VaultItem";
 
 type Vault = {
   id: string;
@@ -14,8 +15,35 @@ type Vault = {
   updatedAt: Date;
 };
 
+const MOCK_VAULTS: Vault[] = [
+  {
+    id: "1",
+    name: "Treasury Multisig",
+    address: "0x71C7123abc456def7890123456976F",
+    balance: "2.4501 ETH",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: "2",
+    name: "Cold Storage",
+    address: "0xAB3d9876543210fedcba987654392c1A",
+    balance: "0.8750 ETH",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: "3",
+    name: "Operations Fund",
+    address: "0x4Ee81234567890abcdef123456F21b0",
+    balance: "1.1200 ETH",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+];
+
 const ListVault = () => {
-  const [vaults] = useState<Vault[]>([]);
+  const [vaults] = useState<Vault[]>(MOCK_VAULTS);
 
   return (
     <section className={styles.card}>
@@ -24,8 +52,8 @@ const ListVault = () => {
       <header className={styles.header}>
         <h2 className={styles.title}>Your Vaults</h2>
         <p className={styles.description}>
-          Threshold-signed vaults you've created. Each requires 2-of-3 signers
-          to authorize a transaction.
+          Threshold-signed vaults you control. Each requires 2-of-3 signers to
+          authorize a transaction.
         </p>
       </header>
 
@@ -35,9 +63,7 @@ const ListVault = () => {
         {vaults.length > 0 ? (
           <div className={styles.vaultList}>
             {vaults.map((vault) => (
-              <div key={vault.id} className={styles.vaultItem}>
-                {vault.name}
-              </div>
+              <VaultItem key={vault.id} {...vault} />
             ))}
           </div>
         ) : (
