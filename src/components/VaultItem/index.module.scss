@@ -68,7 +68,7 @@
 
   &:hover,
   &:focus {
-    @apply border-transparent bg-[#6ef0dc] text-[#071412];
+    @apply border-transparent bg-[#6ef0dc] text-[#071412] opacity-70;
 
     background: #6ef0dc !important;
     color: #071412 !important;
