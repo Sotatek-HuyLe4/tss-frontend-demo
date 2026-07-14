@@ -37,7 +37,7 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
       </div>
 
       <div className={styles.right}>
-        <p className={styles.balance}>{balance}</p>
+        <p className={styles.balance}>{balance} ETH</p>
         <div className={styles.actions}>
           <Button className={styles.faucetBtn}>Faucet</Button>
           <Button className={styles.sendBtn}>Send ETH</Button>

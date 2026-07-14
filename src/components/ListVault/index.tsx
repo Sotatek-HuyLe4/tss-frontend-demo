@@ -1,10 +1,8 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 
 import styles from "./index.module.scss";
 import VaultItem from "../VaultItem";
+import { getUsers } from "@/apis/users";
 
 type Vault = {
   id: string;
@@ -15,35 +13,8 @@ type Vault = {
   updatedAt: Date;
 };
 
-const MOCK_VAULTS: Vault[] = [
-  {
-    id: "1",
-    name: "Treasury Multisig",
-    address: "0x71C7123abc456def7890123456976F",
-    balance: "2.4501 ETH",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: "2",
-    name: "Cold Storage",
-    address: "0xAB3d9876543210fedcba987654392c1A",
-    balance: "0.8750 ETH",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: "3",
-    name: "Operations Fund",
-    address: "0x4Ee81234567890abcdef123456F21b0",
-    balance: "1.1200 ETH",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
-
-const ListVault = () => {
-  const [vaults] = useState<Vault[]>(MOCK_VAULTS);
+const ListVault = async () => {
+  const { users: vaults } = await getUsers();
 
   return (
     <section className={styles.card}>
@@ -62,7 +33,7 @@ const ListVault = () => {
       <div className={styles.body}>
         {vaults.length > 0 ? (
           <div className={styles.vaultList}>
-            {vaults.map((vault) => (
+            {vaults.map((vault: Vault) => (
               <VaultItem key={vault.id} {...vault} />
             ))}
           </div>

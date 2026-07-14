@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Button, Form, Input, Modal } from "antd";
 import { toast } from "react-toastify";
 
@@ -31,6 +32,7 @@ const CreateVault = () => {
   const [progress, setProgress] = useState(0);
   const progressTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const progressRef = useRef(0);
+  const router = useRouter();
 
   const clearProgressTimer = () => {
     if (progressTimerRef.current) {
@@ -97,6 +99,8 @@ const CreateVault = () => {
       const { channelId } = await createChannel();
       await generateKeyShare({ vault, channelId });
       await finishProgress();
+
+      toast.success("Vault created successfully");
     } catch (error) {
       console.error(error);
 
@@ -107,7 +111,9 @@ const CreateVault = () => {
       setProgress(0);
       progressRef.current = 0;
       setLoading(false);
-      toast.success("Vault created successfully");
+
+      // refresh the page
+      router.refresh();
     }
   };
 
