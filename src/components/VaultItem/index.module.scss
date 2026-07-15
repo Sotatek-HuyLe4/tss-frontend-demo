@@ -94,11 +94,278 @@
   border: none !important;
 
   &:hover,
-  &:focus {
+  &:focus,
+  &:disabled {
     @apply border-transparent bg-[#6ef0dc] text-[#071412] opacity-70;
 
     background: #6ef0dc !important;
     color: #071412 !important;
     border-color: transparent !important;
+  }
+
+  &:disabled {
+    @apply opacity-50;
+  }
+}
+
+/* Send ETH Modal */
+.sendModal {
+  :global(.ant-modal-content) {
+    padding: 0 !important;
+    overflow: visible;
+    border-radius: 28px;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  :global(.ant-modal-close) {
+    @apply top-5 flex h-9 w-9 items-center justify-center rounded-full;
+
+    inset-inline-end: 20px;
+    z-index: 5;
+    background: rgba(94, 234, 212, 0.08);
+    color: rgba(234, 255, 249, 0.85);
+
+    &:hover {
+      background: rgba(94, 234, 212, 0.16) !important;
+      color: #ffffff !important;
+    }
+  }
+}
+
+.sendModal:global(.ant-modal) {
+  :global(.ant-modal-container) {
+    @apply bg-transparent;
+  }
+
+  :global(.ant-modal-close) {
+    @apply top-10 right-10 rounded-full text-[rgba(201,239,233,0.85)];
+
+    background-color: rgba(94, 234, 212, 0.08);
+  }
+}
+
+.sendModalMask {
+  background: rgba(2, 12, 10, 0.72) !important;
+  backdrop-filter: blur(2px);
+}
+
+.sendModalBody {
+  padding: 0 !important;
+}
+
+.sendCard {
+  @apply relative overflow-hidden px-10 pb-8 pt-9;
+
+  border-radius: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 38, 33, 0.98) 0%,
+    rgba(4, 16, 14, 0.99) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(220, 255, 246, 0.45),
+    0 0 0 1px rgba(94, 234, 212, 0.2),
+    0 0 28px rgba(94, 234, 212, 0.1),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+
+  &::before {
+    content: "";
+    @apply pointer-events-none absolute inset-0 opacity-[0.2];
+
+    background-image: radial-gradient(
+      rgba(94, 234, 212, 0.2) 0.7px,
+      transparent 0.7px
+    );
+    background-size: 13px 13px;
+  }
+
+  &::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 rounded-[28px];
+
+    padding: 1px;
+    background: linear-gradient(
+      180deg,
+      rgba(230, 255, 248, 0.95) 0%,
+      rgba(94, 234, 212, 0.55) 18%,
+      rgba(94, 234, 212, 0.22) 55%,
+      rgba(94, 234, 212, 0.08) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+}
+
+.sendGlow {
+  @apply pointer-events-none absolute top-0 left-1/2 h-[2px] w-[78%] -translate-x-1/2;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(210, 255, 245, 0.95) 20%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(210, 255, 245, 0.95) 80%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 10px rgba(180, 255, 236, 0.75),
+    0 0 22px rgba(94, 234, 212, 0.45);
+  border-radius: 999px;
+  z-index: 3;
+}
+
+.sendHeader {
+  @apply relative flex flex-col items-center gap-3 text-center;
+}
+
+.sendIcon {
+  @apply h-11 w-11;
+
+  filter: drop-shadow(0 0 12px rgba(94, 234, 212, 0.65));
+}
+
+.sendTitle {
+  @apply m-0 text-[26px] font-bold leading-tight text-white;
+}
+
+.sendDescription {
+  @apply m-0 max-w-[44ch] text-[14px] leading-[1.55] text-[rgba(167,243,232,0.62)];
+}
+
+.vaultPill {
+  @apply mt-3 flex w-full max-w-[320px] items-center justify-between gap-4 rounded-full
+    border border-[rgba(94,234,212,0.28)] bg-[rgba(0,0,0,0.35)] py-2 pl-3 pr-4;
+}
+
+.vaultPillLeft {
+  @apply flex items-center gap-2;
+}
+
+.vaultPillIcon {
+  @apply h-5 w-5;
+}
+
+.vaultPillName {
+  @apply text-sm font-semibold text-white;
+}
+
+.vaultPillBalance {
+  @apply text-[13px] text-[rgba(167,243,232,0.6)];
+}
+
+.sendDivider {
+  @apply relative my-7 h-px w-full bg-[rgba(94,234,212,0.1)];
+}
+
+.sendForm {
+  @apply relative flex flex-col;
+}
+
+.fieldLabel {
+  @apply text-[11px] font-semibold tracking-[0.16em] text-[rgba(94,234,212,0.68)];
+}
+
+.sendFormItem {
+  @apply mb-5;
+
+  :global(.ant-form-item-label) {
+    @apply pb-2;
+
+    > label {
+      @apply h-auto;
+    }
+  }
+
+  :global(.ant-form-item-explain-error) {
+    @apply mt-1 text-xs text-red-400;
+  }
+
+  :global(.ant-input-outlined) {
+    background: none;
+    border-color: rgba(45, 212, 191, 0.28);
+
+    &:hover,
+    &:focus-within {
+      border-color: rgba(94, 234, 212, 0.45);
+    }
+  }
+
+  :global(.ant-input-outlined.ant-input-status-error:not(.ant-input-disabled)) {
+    background: none;
+  }
+}
+
+.sendInput {
+  @apply h-12 rounded-xl border border-[rgba(45,212,191,0.28)] bg-[rgba(0,0,0,0.42)] px-4 text-sm;
+
+  &:hover,
+  &:focus-within,
+  &:global(.ant-input-affix-wrapper-focused) {
+    @apply border-[rgba(94,234,212,0.45)] shadow-none;
+    background: rgba(0, 0, 0, 0.52) !important;
+  }
+
+  :global(.ant-input-prefix) {
+    @apply mr-2 text-[rgba(94,234,212,0.5)];
+  }
+}
+
+.sendInputField {
+  color: #eafff9 !important;
+  caret-color: #5eead4;
+  background: transparent !important;
+  -webkit-text-fill-color: #eafff9;
+
+  &::placeholder {
+    color: rgba(94, 234, 212, 0.38) !important;
+    -webkit-text-fill-color: rgba(94, 234, 212, 0.38);
+  }
+}
+
+.amountSuffix {
+  @apply flex items-center gap-2;
+}
+
+.ethLabel {
+  @apply text-[13px] font-medium text-[rgba(167,243,232,0.6)];
+}
+
+.maxBtn {
+  @apply cursor-pointer rounded-lg border border-[rgba(94,234,212,0.45)] bg-transparent
+    px-2.5 py-1 text-[11px] font-bold tracking-[0.08em] text-[#5eead4] transition-colors;
+
+  &:hover {
+    background: rgba(94, 234, 212, 0.1);
+    border-color: rgba(94, 234, 212, 0.7);
+  }
+}
+
+.availableText {
+  @apply -mt-3 mb-5 text-right text-xs text-[rgba(167,243,232,0.45)];
+}
+
+.sendSubmitItem:global(.ant-form-item) {
+  @apply mb-1;
+}
+
+.sendSubmitBtn:global(.ant-btn) {
+  @apply h-13 w-full rounded-2xl border-0 text-[15px] font-semibold text-[#071412];
+
+  background: linear-gradient(90deg, #2dd4a8 0%, #86f7dd 100%) !important;
+  box-shadow: 0 0 26px rgba(94, 234, 212, 0.3);
+
+  &:hover,
+  &:focus {
+    color: #071412 !important;
+    border-color: transparent !important;
+    opacity: 0.85;
   }
 }
