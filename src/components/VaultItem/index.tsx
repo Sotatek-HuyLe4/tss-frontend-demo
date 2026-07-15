@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "antd";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import styles from "./index.module.scss";
 import { faucet } from "@/apis/faucet";
@@ -25,6 +26,7 @@ const truncateAddress = (address: string) => {
 
 const VaultItem = ({ name, address, balance }: IVaultItem) => {
   const [isFaucetLoading, setIsFaucetLoading] = useState(false);
+  const router = useRouter();
 
   const handleCopyAddress = async () => {
     try {
@@ -41,9 +43,10 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
     try {
       // try to faucet the address
       await faucet({ address });
-      await new Promise((resolve) => setTimeout(resolve, 3_000));
+      await new Promise((resolve) => setTimeout(resolve, 5_000));
 
       toast.success("Faucet successful");
+      router.refresh();
     } catch (error) {
       console.error(error);
 
