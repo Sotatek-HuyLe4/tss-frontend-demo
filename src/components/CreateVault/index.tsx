@@ -102,10 +102,10 @@ const CreateVault = () => {
 
       toast.success("Vault created successfully");
     } catch (error) {
-      console.error(error);
+      console.log({ error });
 
       clearProgressTimer();
-      toast.error("Failed to create vault");
+      toast.error(error ? (error as any).message : "Failed to create vault");
     } finally {
       form.resetFields();
       setProgress(0);

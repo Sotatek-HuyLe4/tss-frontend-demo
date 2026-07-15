@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 import styles from "./index.module.scss";
 import { faucet } from "@/apis/faucet";
+import { createChannel, signTx } from "@/apis/tss";
 
 export interface IVaultItem {
   id: string;
@@ -29,9 +30,14 @@ const truncateAddress = (address: string) => {
   return `${address.slice(0, 6)}...${address.slice(-5)}`;
 };
 
+const formatBalance = (balance: string) => {
+  return Number(balance).toFixed(4);
+};
+
 const VaultItem = ({ name, address, balance }: IVaultItem) => {
   const [isFaucetLoading, setIsFaucetLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [sendForm] = Form.useForm<FieldType>();
   const router = useRouter();
 
@@ -45,7 +51,7 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
   };
 
   const handleMaxAmount = () => {
-    sendForm.setFieldsValue({ amount: balance });
+    sendForm.setFieldsValue({ amount: (Number(balance) - 0.00063).toString() });
   };
 
   const handleCloseModal = () => {
@@ -53,8 +59,32 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
     sendForm.resetFields();
   };
 
-  const handleSendEth = (values: FieldType) => {
-    console.log(values);
+  const handleSendEth = async (values: FieldType) => {
+    setIsSending(true);
+    const { recipient, amount } = values;
+
+    try {
+      // get the channel id
+      const { channelId } = await createChannel();
+
+      // sign the tx
+      await signTx({ vault: name, channelId, toAddress: recipient, amount });
+
+      // sleep for 5 seconds
+      await new Promise((resolve) => setTimeout(resolve, 5_000));
+
+      toast.success("ETH sent successfully");
+
+      // refresh the page
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Failed to send ETH");
+    }
+
+    setIsSending(false);
+    handleCloseModal();
   };
 
   const handleFaucet = async () => {
@@ -68,7 +98,7 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
       toast.success("Faucet successful");
       router.refresh();
     } catch (error) {
-      console.error(error);
+      console.log(error);
 
       toast.error("Failed to faucet");
     }
@@ -110,7 +140,7 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
         </div>
 
         <div className={styles.right}>
-          <p className={styles.balance}>{balance} ETH</p>
+          <p className={styles.balance}>{formatBalance(balance)} ETH</p>
           <div className={styles.actions}>
             <Button
               className={styles.faucetBtn}
@@ -174,7 +204,7 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
                 <span className={styles.vaultPillName}>{name}</span>
               </span>
               <span className={styles.vaultPillBalance}>
-                {balance} ETH available
+                {formatBalance(balance)} ETH available
               </span>
             </div>
           </div>
@@ -219,7 +249,21 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
             <Form.Item<FieldType>
               label={<span className={styles.fieldLabel}>AMOUNT</span>}
               name="amount"
-              rules={[{ required: true, message: "Please enter an amount" }]}
+              rules={[
+                { required: true, message: "Please enter an amount" },
+                {
+                  validator: (_, value) => {
+                    if (
+                      Number(value) > Number(balance) - 0.00063 ||
+                      Number(value) <= 0
+                    ) {
+                      return Promise.reject(new Error("Insufficient balance"));
+                    }
+
+                    return Promise.resolve();
+                  },
+                },
+              ]}
               className={styles.sendFormItem}
             >
               <Input
@@ -241,10 +285,17 @@ const VaultItem = ({ name, address, balance }: IVaultItem) => {
               />
             </Form.Item>
 
-            <p className={styles.availableText}>Available: {balance} ETH</p>
+            <p className={styles.availableText}>
+              Available: {formatBalance(balance)} ETH
+            </p>
 
             <Form.Item className={styles.sendSubmitItem}>
-              <Button htmlType="submit" className={styles.sendSubmitBtn}>
+              <Button
+                htmlType="submit"
+                className={styles.sendSubmitBtn}
+                loading={isSending}
+                disabled={isSending}
+              >
                 Send ETH →
               </Button>
             </Form.Item>

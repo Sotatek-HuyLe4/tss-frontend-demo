@@ -65,3 +65,34 @@ export const generateKeyShare = async ({
 
   return response.data.data;
 };
+
+export const signTx = async ({
+  vault,
+  channelId,
+  toAddress,
+  amount,
+}: {
+  vault: string;
+  channelId: string;
+  toAddress: string;
+  amount: string;
+}) => {
+  const options: AxiosRequestConfig<AxiosDefaults> = {
+    url: `${BASE_URL}/sign`,
+    method: "POST",
+    data: {
+      vault,
+      password: "123456789",
+      channelId,
+      toAddress,
+      amount,
+    } as any,
+  };
+
+  const response = await httpRequest(options);
+  if (response.status >= 400) {
+    throw new Error(response.data?.message || "Failed to sign tx");
+  }
+
+  return response.data.data;
+};

@@ -19,7 +19,7 @@ const ListVault = async () => {
     const { users } = await getUsers();
     vaults = users;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   return (

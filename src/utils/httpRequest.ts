@@ -18,7 +18,7 @@ const httpRequest = async ({
 
     return response;
   } catch (error: any) {
-    console.error(error);
+    console.log(error);
 
     return error?.response;
   }
